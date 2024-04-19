@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora</title>
+<style>
+    body {
+        background: linear-gradient(to bottom right, #ff0000, #800000); /* fondo en color degradado rojo */
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .calculadora {
+        background-color: #808080; /* tablero de color gris */
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    .boton {
+        width: 50px;
+        height: 50px;
+        background-color: #000000; /* botones de color negro */
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 20px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    .boton:hover {
+        background-color: #333333;
+    }
+</style>
+</head>
+<body>
+<div class="calculadora">
+    <h2>Calculadora</h2>
+    <input type="text" id="display" disabled>
+    <br>
+    <button class="boton" onclick="agregarNumero('7')">7</button>
+    <button class="boton" onclick="agregarNumero('8')">8</button>
+    <button class="boton" onclick="agregarNumero('9')">9</button>
+    <button class="boton" onclick="operacion('+')">+</button>
+    <br>
+    <button class="boton" onclick="agregarNumero('4')">4</button>
+    <button class="boton" onclick="agregarNumero('5')">5</button>
+    <button class="boton" onclick="agregarNumero('6')">6</button>
+    <button class="boton" onclick="operacion('-')">-</button>
+    <br>
+    <button class="boton" onclick="agregarNumero('1')">1</button>
+    <button class="boton" onclick="agregarNumero('2')">2</button>
+    <button class="boton" onclick="agregarNumero('3')">3</button>
+    <button class="boton" onclick="operacion('*')">*</button>
+    <br>
+    <button class="boton" onclick="agregarNumero('0')">0</button>
+    <button class="boton" onclick="limpiar()">C</button>
+    <button class="boton" onclick="calcular()">=</button>
+    <button class="boton" onclick="operacion('/')">/</button>
+</div>
+<!-- Créditos -->
+<p style="text-align: center; color: white;">Autor: Carlos Edo. Sepúlveda Toro</p>
+
+<script>
+    let operando1 = '';
+    let operando2 = '';
+    let operacionActual = null;
+
+    function agregarNumero(numero) {
+        if (operacionActual === null) {
+            operando1 += numero;
+            actualizarDisplay(operando1);
+        } else {
+            operando2 += numero;
+            actualizarDisplay(operando2);
+        }
+    }
+
+    function operacion(operacion) {
+        operacionActual = operacion;
+    }
+
+    function limpiar() {
+        operando1 = '';
+        operando2 = '';
+        operacionActual = null;
+        actualizarDisplay('');
+    }
+
+    function calcular() {
+        let resultado;
+        const num1 = parseFloat(operando1);
+        const num2 = parseFloat(operando2);
+        switch (operacionActual) {
+            case '+':
+                resultado = num1 + num2;
+                break;
+            case '-':
+                resultado = num1 - num2;
+                break;
+            case '*':
+                resultado = num1 * num2;
+                break;
+            case '/':
+                resultado = num1 / num2;
+                break;
+            default:
+                return;
+        }
+        actualizarDisplay(resultado);
+        operando1 = resultado.toString();
+        operando2 = '';
+        operacionActual = null;
+    }
+
+    function actualizarDisplay(valor) {
+        document.getElementById('display').value = valor;
+    }
+</script>
+</body>
+</html>
